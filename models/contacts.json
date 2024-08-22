@@ -18,12 +18,6 @@
     "phone": "(542) 451-7038"
   },
   {
-    "id": "vza2RIzNGIwutCVCs4mCL",
-    "name": "Wylie Pope",
-    "email": "est@utquamvel.net",
-    "phone": "(692) 802-2949"
-  },
-  {
     "id": "05olLMgyVQdWRwgKfg5J6",
     "name": "Cyrus Jackson",
     "email": "nibh@semsempererat.com",
@@ -58,5 +52,11 @@
     "name": "Alec Howard",
     "email": "Donec.elementum@scelerisquescelerisquedui.net",
     "phone": "(748) 206-2688"
+  },
+  {
+    "id": "03a9455f43304b4994d3",
+    "name": "Bartek S",
+    "email": "bartek@1234.pl",
+    "phone": "123-456-782"
   }
 ]
