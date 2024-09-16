@@ -1,19 +1,34 @@
-// const fs = require('fs/promises')
+const Contact = require("./schemas/contacts");
 
-const listContacts = async () => {}
+const listContactsService = (filter, skip, limit) => {
+  return Contact.find(filter).skip(skip).limit(limit);
+};
 
-const getContactById = async (contactId) => {}
+const getContactByIdService = (filter) => {
+  return Contact.findById(filter);
+};
 
-const removeContact = async (contactId) => {}
+const removeContactService = (filter) => {
+  return Contact.deleteOne(filter);
+};
 
-const addContact = async (body) => {}
+const addContactService = (userId, { name, email, phone }) => {
+  return Contact.create({ name, email, phone, owner: userId });
+};
 
-const updateContact = async (contactId, body) => {}
+const updateContactService = (filter, updateData) => {
+  return Contact.findByIdAndUpdate(filter, updateData, { new: true });
+};
+
+const updateStatusContactService = (filter, favorite) => {
+  return Contact.findByIdAndUpdate(filter, { favorite }, { new: true });
+};
 
 module.exports = {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
-}
+  listContactsService,
+  getContactByIdService,
+  removeContactService,
+  addContactService,
+  updateContactService,
+  updateStatusContactService,
+};
