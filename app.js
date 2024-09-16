@@ -1,25 +1,48 @@
-const express = require('express')
-const logger = require('morgan')
-const cors = require('cors')
+const express = require("express");
+const logger = require("morgan");
+const cors = require("cors");
 
-const contactsRouter = require('./routes/api/contacts')
+const path = require("path");
 
-const app = express()
+const contactsRouter = require("./routes/api/contacts");
+const authRouter = require("./routes/api/auth");
+const userRouter = require("./routes/api/users");
+const { authMiddleWare } = require("./routes/controllers/auth");
 
-const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
+const app = express();
 
-app.use(logger(formatsLogger))
-app.use(cors())
-app.use(express.json())
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
-app.use('/api/contacts', contactsRouter)
+app.use(express.static(path.resolve(__dirname, "./public")));
+
+app.use(logger(formatsLogger));
+app.use(cors());
+app.use(express.json());
+
+require("./JWT");
+
+app.use("/api/contacts", authMiddleWare, contactsRouter);
+
+app.use("/api/auth", authRouter);
+
+app.use("/api/users", userRouter);
 
 app.use((req, res) => {
-  res.status(404).json({ message: 'Not found' })
-})
+  res.status(404).json({
+    status: "error",
+    code: 404,
+    message: `Use api on routes: /api/auth/registration - registration user {username, email, password} /api/auth/login - login {email, password} /api/contact - get message if user is authenticated`,
+    data: "Not found",
+  });
+});
 
 app.use((err, req, res, next) => {
-  res.status(500).json({ message: err.message })
-})
+  res.status(500).json({
+    status: "Fail",
+    code: 500,
+    message: err.message,
+    data: "Internal server error.",
+  });
+});
 
-module.exports = app
+module.exports = app;
